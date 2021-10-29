@@ -2,7 +2,7 @@ import "tailwindcss/tailwind.css";
 import { Line } from "react-chartjs-2";
 
 export default function OpenPage({ props }) {
-  let mrrData = props[0].mrr[0];
+  let mrrData = props[0].mrr[0].monthly;
 
   let data = (canvas) => {
     let ctx = canvas.getContext("2d");
@@ -11,10 +11,10 @@ export default function OpenPage({ props }) {
     gradient.addColorStop(1, "#3EB0EF50");
 
     return {
-      labels: mrrData.days,
+      labels: mrrData.time,
       datasets: [
         {
-          label: "MRR",
+          label: "ARR",
           fill: true,
           lineTension: 0.1,
           backgroundColor: gradient,
@@ -33,7 +33,7 @@ export default function OpenPage({ props }) {
           pointHitRadius: 10,
           yAxisID: "yAxis",
           xAxisID: "xAxis",
-          data: mrrData.mrr,
+          data: mrrData.arr,
         },
       ],
     };
@@ -48,10 +48,35 @@ export default function OpenPage({ props }) {
         displayColors: false,
       },
     },
+    scales: {
+      yAxis: {
+        position: "right",
+        grid: {
+          color: "#ffffff20",
+        },
+        ticks: {
+          callback: function (value, index, values) {
+            return "$" + value;
+          },
+        },
+      },
+      xAxis: {
+        position: "top",
+        grid: {
+          color: "#ffffff20",
+        },
+        ticks: {
+          callback: function (val, index) {
+            // Hide the label of every 2nd dataset
+            return index % 3 === 0 ? this.getLabelForValue(val) : "";
+          },
+        },
+      },
+    },
   };
 
   return (
-    <div className="relative h-screen pt-16 bg-gray-900">
+    <div className="relative pt-16 bg-gray-900">
       <h1 className="text-5xl text-white text-center font-thin mb-12">/open</h1>
       <h2 className="text-2xl text-white text-center mt-2">
         All of our company metrics are public
@@ -61,35 +86,25 @@ export default function OpenPage({ props }) {
         <a className="text-ghost-blue">Open Startups</a> movement
       </p>
       <div className="w-5/6 mx-auto mt-16">
-        <Line data={data} options={options} />
-        <div className="mt-16 grid grid-cols-4 gap-4">
-          <div className="text-center p-6 rounded-lg border-2 border-gray-800 bg-gradient-to-tl from-gray-900 to-gray-800">
-            <p className="text-4xl text-white font-bold">{props[0].kpis.MRR}</p>
-            <p className="text-base text-white font-light">MRR</p>
+        <div className="relative">
+          <Line data={data} options={options} />
+          <div className="absolute left-1/9 top-3/9 text-center p-6">
+            <p className="text-6xl text-white font-bold">{props[0].arr}</p>
+            <p className="text-lg text-white font-thin mt-2">Annual Run Rate</p>
           </div>
-          <div className="text-center p-6 rounded-lg border-2 border-gray-800 bg-gradient-to-tl from-gray-900 to-gray-800">
-            <p className="text-4xl text-white font-bold">
-              {props[0].kpis.Churn}
-            </p>
-            <p className="text-base text-white font-light">Churn</p>
-          </div>
-          <div className="text-center p-6 rounded-lg border-2 border-gray-800 bg-gradient-to-tl from-gray-900 to-gray-800">
-            <p className="text-4xl text-white font-bold">
-              {props[0].kpis["Active Users"]}
-            </p>
-            <p className="text-base text-white font-light">Active Users</p>
-          </div>
-          <div className="text-center p-6 rounded-lg border-2 border-gray-800 bg-gradient-to-tl from-gray-900 to-gray-800">
-            <p className="text-4xl text-white font-bold">
-              {props[0].kpis.Installs}
-            </p>
-            <p className="text-base text-white font-light">Installs</p>
-          </div>
+        </div>
+        <div className="mt-16 grid grid-cols-2 lg:grid-cols-4 gap-4">
+          {props[0].kpis.map(({ metric, value }) => (
+            <div className="text-center p-6 rounded-lg border-2 border-gray-800 bg-gradient-to-tl from-gray-900 to-gray-800">
+              <p className="text-5xl text-white font-bold">{value}</p>
+              <p className="text-base text-white font-light">{metric}</p>
+            </div>
+          ))}
         </div>
       </div>
       <div className="mt-16">
-        <p className="text-sm text-white text-center font-thin my-2">
-          Powered by Sync Inc
+        <p className="text-sm text-white text-center font-thin mt-2 pb-64">
+          Powered by Sequin
         </p>
       </div>
     </div>

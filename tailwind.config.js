@@ -7,6 +7,10 @@ module.exports = {
         "ghost-blue": "#26a6ed",
       },
     },
+    inset: {
+      "3/9": "35%",
+      "1/9": "5%",
+    },
   },
   variants: {
     extend: {},

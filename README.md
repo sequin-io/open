@@ -1,3 +1,3 @@
-# open
+# /open
 
-This is the start of the README
+New Readme coming
