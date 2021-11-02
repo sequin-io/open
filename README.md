@@ -50,11 +50,11 @@ With your data setup, you can spin up your `/open` page:
 2. Add a `.env.local` file to the root of the directory and paste in the following environment variables, replacing the placeholders with the credentials for your Sequin database.
 
    ```plain
-    PG_PASSWORD = {{YOUR_DB_PASSWORD}}
-    PG_HOST = {{YOUR_DB_HOST}}
-    PG_USER = {{YOUR_DB_USE}}
-    PG_DATABASE = {{YOUR_DB_NAME}}
-    PG_PORT = 5432
+    PG_PASSWORD={{YOUR_DB_PASSWORD}}
+    PG_HOST={{YOUR_DB_HOST}}
+    PG_USER={{YOUR_DB_USE}}
+    PG_DATABASE={{YOUR_DB_NAME}}
+    PG_PORT=5432
    ```
 
    > You  an always find your database credentials by going to the [Sequin Console](https://app.sequin.io/) and clicking the **Connect** button on your sync.
