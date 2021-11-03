@@ -12,7 +12,7 @@ Add an open page to your website in a few minutes. Share your revenue, KPIs, and
 
 > The design of the template is inspired by [ghost's `/open` page](https://ghost.org/open/) 👻
 
-Built using Next.js and Sequin - you can connect this `/open` template directly to your Stripe data and deploy it to your website using Vercel. This page is completely static, so it loads instantly.
+Built using Next.js and Sequin - you can connect this `/open` template directly to your Stripe data and deploy it to your website using a service like Vercel.
 
 ## Getting started
 
@@ -20,11 +20,11 @@ This `/open` page pulls revenue and KPI data directly from Stripe and Airtable u
 
 ### Setup Stripe
 
-You'll securely connect to your Stripe data using Sequin. Here is a brief overview, but if you need more detail you can [read a step-by-step guide here](https://docs.sequin.io/stripe/setup).
+You'll securely connect to your Stripe data using Sequin. Here is a brief overview, but if you need more guidance, [read a step-by-step guide here](https://docs.sequin.io/stripe/setup).
 
 1. Create a [Sequin account](https://app.sequin.io/signup).
 2. Create a new Stripe sync and enter your Stripe credentials.
-3. **Click Create**. Sequin will provision a database for you on AWS and begin syncing your Stripe data.
+3. **Click Create**. Sequin will provision a database for you on AWS and begin syncing your Stripe data to the `public` schema.
 
 > If you would prefer, you can [sync your Stripe directly to your database](https://docs.sequin.io/self-hosted).
 
@@ -37,7 +37,7 @@ You'll use Airtable as a simple CMS to manage your metrics and KPIs. You'll then
 3. Now, sync your Airtable data to the same Sequin database that contains your Stripe data:
    * Go to the [Sequin Console](https://app.sequin.io/) and click **Add Sync**.
    * Select Airtable as your source, enter your Airtable API key, and choose your `/Open` base.
-   * In the destination section, click **Change** and select **Choose Existing**. Click **Select** next to the database that contains your Stripe data and name the schema `airtable`.
+   * In the destination section, click **Change** and select **Choose Existing**. Click **Select** next to the database that contains your Stripe data and name the schema `airtable`. (Keep your Stripe data in the `public` schema :)
    * Click to confirm the changes, and then click the **Create** button.
 
 Sequin will now sync your Airtable data into the `airtable` schema in your Sequin database.
@@ -47,17 +47,17 @@ Sequin will now sync your Airtable data into the `airtable` schema in your Sequi
 With your data setup, you can spin up your `/open` page:
 
 1. Clone this repo.
-2. Add a `.env.local` file to the root of the directory and paste in the following environment variables, replacing the placeholders with the credentials for your Sequin database.
+2. Rename the `.env.example` file to `.env.local` replace the placeholders with the credentials for your Sequin database.
 
    ```plain
     PG_PASSWORD={{YOUR_DB_PASSWORD}}
-    PG_HOST={{YOUR_DB_HOST}}
+    PG_HOST=evening-soiree.sequindb.com
     PG_USER={{YOUR_DB_USE}}
     PG_DATABASE={{YOUR_DB_NAME}}
     PG_PORT=5432
    ```
 
-   > You  an always find your database credentials by going to the [Sequin Console](https://app.sequin.io/) and clicking the **Connect** button on your sync.
+   > You can always find your database credentials by going to the [Sequin Console](https://app.sequin.io/) and clicking the **Connect** button on your sync.
 
 3. Install the dependencies by running `yarn` then launch the app by running `yarn dev` and opening `http://localhost:3000` in your browser.
 

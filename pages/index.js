@@ -111,11 +111,10 @@ export default function OpenPage({ props }) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const { getProps } = await import("../lib/metrics");
   let props = await getProps();
   return {
     props: { props },
-    revalidate: 10,
   };
 }
